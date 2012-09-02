@@ -1,0 +1,18 @@
+{
+ "source": 
+ {
+	"type": "bytecode",
+	"value": "todo"
+ },
+ "const": 
+  { "params": [ ]
+  , "values": [ ]
+  }
+, "sampler": 
+  [ 
+    { "name": "tex"
+    , "index": 0
+    , "type": "sampler2D"
+    }
+  ]
+}

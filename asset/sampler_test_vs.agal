@@ -1,0 +1,3 @@
+m44 vt0, va0, vc0
+mov v0, va4
+mov op, vt0
