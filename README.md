@@ -5,15 +5,16 @@ Flash Stage3D api lacks of higher level shading languages, while c-based ones ju
 Programs are compiled from mlsl (ML-based shading language) source to agal bytecode or assembler with json file describing named paramaters.
 
 MLSL project: (link as soon as possible)
+
+Example
 ---------------
 
-simple mlsl shader:
-
+```ocaml
 // Const declarations
 const projMatrix  : mat44
 
 // Attributes declarations
-attr POSITION  pos   : vec4
+attr POSITION  pos   : vec2
 attr TEXCOORD0 coord : vec2
 
 // Samplers declarations
@@ -30,3 +31,40 @@ let fragment fs =
 	(tex $coord.yx).wzxw
 
 let shader swizzle_shader= (vs, fs)
+```
+
+Using
+---------------
+
+Initialization:
+
+```actionscript
+// load vertex program
+var vertexProgram:MLSLVertexProgram = new MLSLVertexProgram();
+vertexProgram.loadFromJSON(vpJsonString);
+
+// load fragment program
+var fragmentProgram:MLSLFragmentProgram = new MLSLFragmentProgram();
+fragmentProgram.loadFromJSON(fpJsonString);
+
+// create program and link vertex with fragment
+var program:MLSLProgram = new MLSLProgram(context3d);
+program.link(vertexProgram, fragmentProgram);
+```
+
+Binding constants and textures:
+```actionscript
+// set paramater value. casting is necessary atm
+(program.getVertexParameter('projMatrix') as MLSLConstMat44).setValue(screenMatrix);
+
+program.setSamplerTexture(0, texture);
+
+// set-up vertex buffer attributes using a so called semantics, similar to HLSL/Cg.
+program.setVertexAttribute(MLSLAttr.POSITION, vertBuf, 0);
+program.setVertexAttribute(MLSLAttr.TEXCOORD0, vertBuf, 2);
+
+// bind program itself:
+program.bind();
+
+// draw whatever you want
+```
