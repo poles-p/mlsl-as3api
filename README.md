@@ -4,7 +4,7 @@ Goal of this lib is to bring mlsl feature to flash.
 Flash Stage3D api lacks of higher level shading languages, while c-based ones aren't cool enough.
 Programs are compiled from mlsl (ML-based shading language) source to agal bytecode or assembler with json file describing named paramaters.
 
-MLSL project: (link as soon as possible)
+MLSL repo, language reference and stuff: (link as soon as possible)
 
 Example
 ---------------
