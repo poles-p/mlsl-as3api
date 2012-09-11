@@ -1,0 +1,14 @@
+{ "source": 
+  { "type": "assembler"
+  , "value": "tex ft0, v0, fs0<2d,linear>\nmov oc, ft0\n"
+  }
+, "sampler": 
+  [ 
+    { "name": "tex"
+    , "index": 0
+    , "type": "sampler2D"
+    }
+  ]
+, "constParams": [ ]
+, "constValues": [ ]
+}

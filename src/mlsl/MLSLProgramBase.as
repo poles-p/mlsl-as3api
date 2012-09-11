@@ -11,27 +11,51 @@ package mlsl {
         private var source:ByteArray;
         protected var json:Object;
         protected var context3d:Context3D;
+		protected var programType:String;
+		
+		private const SOURCE_TYPE_ASSEMBLER:String = "assembler";
+		private const SOURCE_TYPE_BYTECODE:String = "bytecode";
 
         private var numericalConsts:Vector.<MLSLConst>;
 
-        public function MLSLProgramBase() {
+        public function MLSLProgramBase(programType:String) {
             consts = new Vector.<MLSLConst>();
+			numericalConsts = new Vector.<MLSLConst>();
             constsByName = new Dictionary();
+			this.programType = programType;
         }
 
         public function loadFromJSON(jsonSource:String):void {
             json = JSON.parse(jsonSource);
-
-            for (var i:int = 0; i < json['const'].params.length; ++i) {
-                var param:Object = json['const'].params[i];
+			
+			if (json.source.type == SOURCE_TYPE_ASSEMBLER)
+				setAssembler(json.source.value);
+			else if (json.source.type == SOURCE_TYPE_BYTECODE)
+				setSource(Base64Decoder.decode(json.source.value));
+			
+			var i:int;
+				
+			for (i = 0; i < json.constParams.length; ++i) {
+                var param:Object = json.constParams[i];
                 var constParam:MLSLConst = new MLSLConst.constClassByType[param.type];
                 constParam.name = param.name;
                 constParam.type = param.type;
                 constParam.register = parseInt(param.register);
-                constParam.fieldOffset = parseInt(param.name);
+                constParam.fieldOffset = parseInt(param.fieldOffset);
+				constParam.programType = programType;
                 consts.push(constParam);
                 constsByName[constParam.name] = constParam;
             }
+			
+			for (i = 0; i < json.constValues.length; ++i) {
+				var value:Object = json.constValues[i];
+				var constValue:MLSLConstVec4 = new MLSLConstVec4();
+				constValue.type = MLSLType.VEC4;
+				constValue.register = value.register;
+				constValue.setValue(value.value[0], value.value[1], value.value[2], value.value[3]);
+				constValue.programType = programType;
+				numericalConsts.push(constValue);
+			}
         }
 
         public function setContext3d(ctx:Context3D):void {
@@ -45,6 +69,9 @@ package mlsl {
         }
 
         public function setAssembler(asm:String):void {
+			var agalAsm:AGALMiniAssembler = new AGALMiniAssembler();
+            agalAsm.assemble(programType, asm);
+            setSource(agalAsm.agalcode);
         }
 
         public function getSource():ByteArray {
@@ -56,9 +83,14 @@ package mlsl {
         }
 
         public function bind():void {
-            for (var i:int = 0; i < consts.length; ++i) {
+			var i:int;
+            for (i = 0; i < consts.length; ++i) {
                 consts[i].bind(context3d);
             }
+			
+			for (i = 0; i < numericalConsts.length; ++i) {
+				numericalConsts[i].bind(context3d);
+			}
         }
 
     }

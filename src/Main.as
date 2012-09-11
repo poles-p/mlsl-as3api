@@ -23,18 +23,10 @@ package {
      * @author mosowski
      */
     public class Main extends Sprite {
-        [Embed(source="../asset/sampler_test.fs",mimeType="application/octet-stream")]
-        public var fsCode:Class;
-        [Embed(source="../asset/sampler_test.vs",mimeType="application/octet-stream")]
-        public var vsCode:Class;
-        [Embed(source="../asset/sampler_test_fs.json",mimeType="application/octet-stream")]
-        public var fsJsonClass:Class;
-        [Embed(source="../asset/sampler_test_vs.json",mimeType="application/octet-stream")]
-        public var vsJsonClass:Class;
-        [Embed(source = "../asset/sampler_test_vs.agal", mimeType = "application/octet-stream")]
-        public var vsAgalClass:Class;
-        [Embed(source = "../asset/sampler_test_fs.agal", mimeType = "application/octet-stream")]
-        public var fsAgalClass:Class;
+        [Embed(source="../asset/sampler_test_fp.json",mimeType="application/octet-stream")]
+        public var fpJsonClass:Class;
+        [Embed(source="../asset/sampler_test_vp.json",mimeType="application/octet-stream")]
+        public var vpJsonClass:Class;
         [Embed(source = "../asset/tex.jpg")]
         public var texClass:Class;
 
@@ -67,21 +59,17 @@ package {
             screenMtx.appendScale(2 / stage.stageWidth, -2 / stage.stageHeight, 1);
             screenMtx.appendTranslation( -1, 1, 0);
 
-            var vsJson:String = (new vsJsonClass() as ByteArrayAsset).toString();
-            var fsJson:String = (new fsJsonClass() as ByteArrayAsset).toString();
+            var vsJson:String = (new vpJsonClass() as ByteArrayAsset).toString();
+            var fsJson:String = (new fpJsonClass() as ByteArrayAsset).toString();
 
             MLSLConst.init();
 
             prog = new MLSLProgram(context3d);
             var vertexProgram:MLSLVertexProgram = new MLSLVertexProgram();
             vertexProgram.loadFromJSON(vsJson);
-            //vertexProgram.setSource(new vsCode() as ByteArrayAsset);
-            vertexProgram.setAssembler((new vsAgalClass() as ByteArrayAsset).toString());
             var fragmentProgram:MLSLFragmentProgram = new MLSLFragmentProgram();
             fragmentProgram.loadFromJSON(fsJson);
-            //fragmentProgram.setSource(new fsCode() as ByteArrayAsset);
-            fragmentProgram.setAssembler((new fsAgalClass() as ByteArrayAsset).toString());
-
+            
             prog.link(vertexProgram, fragmentProgram);
 
             vertBuf = context3d.createVertexBuffer(4, 4 );
@@ -107,9 +95,9 @@ package {
 
             (prog.getVertexParameter('projMatrix') as MLSLConstMat44).setValue(screenMtx);
 
-            prog.setSamplerTexture(0, texture);
-            prog.setVertexAttribute(MLSLAttr.POSITION, vertBuf, 0);
-            prog.setVertexAttribute(MLSLAttr.TEXCOORD0, vertBuf, 2);
+            prog.setSamplerTexture("tex", texture);
+            prog.setVertexAttribute("pos", vertBuf, 0);
+            prog.setVertexAttribute("coord", vertBuf, 2);
 
             prog.bind();
 
