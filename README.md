@@ -16,8 +16,8 @@ Example
 const projMatrix  : mat44
 
 // Attributes declarations
-attr POSITION  pos   : vec2
-attr TEXCOORD0 texcoord : vec2
+attr pos   : vec2
+attr texcoord : vec2
 
 // Samplers declarations
 sampler diffuse : sampler2D
