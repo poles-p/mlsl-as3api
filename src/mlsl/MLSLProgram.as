@@ -35,14 +35,14 @@ package mlsl {
             return fragmentProgram.getParamter(name);
         }
 
-        public function setSamplerTexture(index:int, texture:Texture):void {
-            fragmentProgram.setSamplerTexture(index, texture);
+        public function setSamplerTexture(name:String, texture:Texture):void {
+            fragmentProgram.setSamplerTexture(name, texture);
         }
 
-        public function setVertexAttribute(semantic:String, vb:VertexBuffer3D, offset:int):void {
-            var attr:MLSLAttr = vertexProgram.getAttribute(semantic);
+        public function setVertexAttribute(name:String, vb:VertexBuffer3D, offset:int):void {
+            var attr:MLSLAttr = vertexProgram.getAttribute(name);
             if (attr) {
-                context3d.setVertexBufferAt(attr.index, vb, offset, attr.typeSize);
+                context3d.setVertexBufferAt(attr.register, vb, offset, attr.typeSize);
             }
         }
 

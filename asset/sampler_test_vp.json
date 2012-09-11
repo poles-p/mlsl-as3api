@@ -1,0 +1,28 @@
+{ "source": 
+  { "type": "assembler"
+  , "value": "m44 vt0, va0, vc0\nmov v0, va4\nmov op, vt0\n"
+  }
+, "attr": 
+  [ 
+    { "name": "pos"
+    , "type": "vec2"
+    , "register": 0
+    , "fieldOffset": 0
+    }
+  , 
+    { "name": "coord"
+    , "type": "vec2"
+    , "register": 4
+    , "fieldOffset": 0
+    }
+  ]
+, "constParams": 
+  [ 
+    { "name": "projMatrix"
+    , "type": "mat44"
+    , "register": 0
+    , "fieldOffset": 0
+    }
+  ]
+, "constValues": [ ]
+}
