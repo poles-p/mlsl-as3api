@@ -12,7 +12,6 @@ package {
     import flash.utils.ByteArray;
     import mlsl.MLSLAttr;
     import mlsl.MLSLConst;
-    import mlsl.MLSLConstMat44;
     import mlsl.MLSLFragmentProgram;
     import mlsl.MLSLProgram;
     import mlsl.MLSLVertexProgram;
@@ -69,7 +68,7 @@ package {
             vertexProgram.loadFromJSON(vsJson);
             var fragmentProgram:MLSLFragmentProgram = new MLSLFragmentProgram();
             fragmentProgram.loadFromJSON(fsJson);
-            
+
             prog.link(vertexProgram, fragmentProgram);
 
             vertBuf = context3d.createVertexBuffer(4, 4 );
@@ -93,11 +92,11 @@ package {
         private function onEnterFrame(e:Event):void {
             context3d.clear();
 
-            (prog.getVertexParameter('projMatrix') as MLSLConstMat44).setValue(screenMtx);
+            prog.getVertexParameter('projMatrix').setValueFromMatrix3D(screenMtx);
 
-            prog.setSamplerTexture("tex", texture);
-            prog.setVertexAttribute("pos", vertBuf, 0);
-            prog.setVertexAttribute("coord", vertBuf, 2);
+            prog.setSamplerTexture('tex', texture);
+            prog.setVertexAttribute('pos', vertBuf, 0);
+            prog.setVertexAttribute('coord', vertBuf, 2);
 
             prog.bind();
 

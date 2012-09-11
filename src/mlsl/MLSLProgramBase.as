@@ -13,8 +13,8 @@ package mlsl {
         protected var context3d:Context3D;
 		protected var programType:String;
 		
-		private const SOURCE_TYPE_ASSEMBLER:String = "assembler";
-		private const SOURCE_TYPE_BYTECODE:String = "bytecode";
+		private const SOURCE_TYPE_ASSEMBLER:String = 'assembler';
+		private const SOURCE_TYPE_BYTECODE:String = 'bytecode';
 
         private var numericalConsts:Vector.<MLSLConst>;
 
@@ -49,10 +49,10 @@ package mlsl {
 			
 			for (i = 0; i < json.constValues.length; ++i) {
 				var value:Object = json.constValues[i];
-				var constValue:MLSLConstVec4 = new MLSLConstVec4();
+				var constValue:MLSLConst = MLSLConst.newConstVec4();
 				constValue.type = MLSLType.VEC4;
 				constValue.register = value.register;
-				constValue.setValue(value.value[0], value.value[1], value.value[2], value.value[3]);
+				constValue.setValueFromVec4(value.value[0], value.value[1], value.value[2], value.value[3]);
 				constValue.programType = programType;
 				numericalConsts.push(constValue);
 			}
