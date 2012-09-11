@@ -57,7 +57,7 @@ program.link(vertexProgram, fragmentProgram);
 Binding constants and textures:
 ```actionscript
 // set paramater value. casting is necessary atm
-(program.getVertexParameter('projMatrix') as MLSLConstMat44).setValue(screenMatrix);
+program.getVertexParameter('projMatrix').setValueFromMatrix3D(screenMatrix);
 
 program.setSamplerTexture('diffuse', texture);
 
