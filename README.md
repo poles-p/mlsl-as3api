@@ -25,12 +25,12 @@ sampler diffuse : sampler2D
 // vertex shader
 let vertex vs =
 	{ position = projMatrix * pos
-	; coord    = coord
+	; coord    = texcoord
 	}
 
 // fragment shader
 let fragment fs =
-	(tex $coord.yx).wzxw
+	(diffuse $coord.yx).wzxw
 
 let shader swizzle_shader= (vs, fs)
 ```
