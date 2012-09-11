@@ -16,11 +16,11 @@ Example
 const projMatrix  : mat44
 
 // Attributes declarations
-attr POSITION  pos   : vec2
-attr TEXCOORD0 coord : vec2
+attr pos   : vec2
+attr texcoord : vec2
 
 // Samplers declarations
-sampler tex : sampler2D
+sampler diffuse : sampler2D
 
 // vertex shader
 let vertex vs =
@@ -59,11 +59,11 @@ Binding constants and textures:
 // set paramater value. casting is necessary atm
 (program.getVertexParameter('projMatrix') as MLSLConstMat44).setValue(screenMatrix);
 
-program.setSamplerTexture(0, texture);
+program.setSamplerTexture('diffuse', texture);
 
 // set-up vertex buffer attributes using a so called semantics, similar to HLSL/Cg.
-program.setVertexAttribute(MLSLAttr.POSITION, vertBuf, 0);
-program.setVertexAttribute(MLSLAttr.TEXCOORD0, vertBuf, 2);
+program.setVertexAttribute('pos', vertBuf, 0);
+program.setVertexAttribute('texcoord', vertBuf, 2);
 
 // bind program itself:
 program.bind();
