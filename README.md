@@ -17,10 +17,10 @@ const projMatrix  : mat44
 
 // Attributes declarations
 attr POSITION  pos   : vec2
-attr TEXCOORD0 coord : vec2
+attr TEXCOORD0 texcoord : vec2
 
 // Samplers declarations
-sampler tex : sampler2D
+sampler diffuse : sampler2D
 
 // vertex shader
 let vertex vs =
