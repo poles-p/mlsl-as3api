@@ -1,6 +1,6 @@
 { "source": 
-  { "type": "assembler"
-  , "value": "m44 vt0, va0, vc0\nmov v0, va4\nmov op, vt0\n"
+  { "type": "bytecode"
+  , "value": "oAEAAAChABgAAAAAAA8CAAAA5AAAAAAAAADkAQAAAAAAAAAAAA8EAQAA5AAAAAAA\r\nAAAAAAAAAAAAAAAAAA8DAAAA5AIAAAAAAAAAAAAAAA=="
   }
 , "attr": 
   [ 
@@ -12,7 +12,7 @@
   , 
     { "name": "coord"
     , "type": "vec2"
-    , "register": 4
+    , "register": 1
     , "fieldOffset": 0
     }
   ]

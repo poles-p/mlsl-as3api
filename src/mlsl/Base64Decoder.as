@@ -67,7 +67,7 @@ package mlsl
 			while (true) {
 				if (position >= base64String.length)
 					return -1;
-				var c:int = base64String[position++];
+				var c:int = base64String.charCodeAt(position++);
 				if (c == 61)
 					return -1;
 				else if (char_map[c] != -1)
